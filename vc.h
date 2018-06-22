@@ -109,7 +109,7 @@ void deletePLNode(PL **pQueue, PL* node) {
 	free(node);
 }
 
-// created by Luo hao.
+// created by Zhao yiqi.
 void insertEnd(PL **pQueue, int Pid) {
 	PL *queue = *pQueue;
 	if (!queue) {
