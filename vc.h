@@ -41,8 +41,7 @@ STATE		_stt;
 RESOURCE	_res;
 PCB*		_running;
 PCB*		_begin;
-FILE*		_fwp;
-FILE*		_frp;
+
 PCB* findProcessByPid(int Pid);
 
 void deletePLNode(PL **pQueue, PL* node);
@@ -77,6 +76,7 @@ void printResource();
 
 void printInformation(char *name);
 
+// created by Yang tao.
 PCB* findProcessByPid(int Pid) {
 	PCB* process = _begin;
 
@@ -91,6 +91,7 @@ PCB* findProcessByPid(int Pid) {
 	return NULL;
 }
 
+// created by Zhao yiqi.
 void deletePLNode(PL **pQueue, PL* node) {
 
 	if (*pQueue == node) {
@@ -108,6 +109,7 @@ void deletePLNode(PL **pQueue, PL* node) {
 	free(node);
 }
 
+// created by Luo hao.
 void insertEnd(PL **pQueue, int Pid) {
 	PL *queue = *pQueue;
 	if (!queue) {
@@ -134,6 +136,7 @@ void insertEnd(PL **pQueue, int Pid) {
 	queue->next = nextNode;
 }
 
+// created by Luo hao.
 void scheduler() {
 	if (!_running) {
 		int i;
@@ -152,6 +155,7 @@ void scheduler() {
 	printf("(os) Process %s is running.\n", _running->name);
 }
 
+// created by Luo hao.
 void init() {
 	_Pid = 0;
 	_begin = NULL;
@@ -166,6 +170,7 @@ void init() {
 	for (i = 1; i < 5; i++) _res.r[i] = i;
 }
 
+// created by Luo hao.
 void create(char *name, int priority) {
 	PCB* process = (PCB*)malloc(sizeof(PCB));
 
@@ -209,6 +214,7 @@ void create(char *name, int priority) {
 	scheduler();
 }
 
+// created by Yang tao.
 PCB* findProcessByName(char *name) {
 	PCB* process = _begin;
 
@@ -223,6 +229,7 @@ PCB* findProcessByName(char *name) {
 	return NULL;
 }
 
+// created by Zhao yiqi
 void killChild(PL* list) {
 	if (list) {
 		PCB* process = findProcessByPid(list->Pid);
@@ -232,6 +239,7 @@ void killChild(PL* list) {
 	}
 }
 
+// created by Zhao yiqi
 void killTree(PCB* process) {
 	if (process) {
 		killChild(process->child);
@@ -293,6 +301,7 @@ void killTree(PCB* process) {
 	}
 }
 
+// created by Zhao yiqi
 void allocate() {
 	int i;
 	for (i = 0; i < 3; i++) {
@@ -328,6 +337,7 @@ void allocate() {
 	}
 }
 
+// created by Zhao yiqi
 void destroy(char *name) {
 	PCB* process = findProcessByName(name);
 	if (process->parent) {
@@ -349,6 +359,7 @@ void destroy(char *name) {
 	scheduler();
 }
 
+// created by Zhao yiqi
 void request(int Rid, int cnt) {
 	if (cnt <= _res.r[Rid]) {
 		_running->requested.r[Rid] = _running->requested.r[Rid] + cnt;
@@ -362,6 +373,7 @@ void request(int Rid, int cnt) {
 	scheduler();
 }
 
+// created by Zhao yiqi
 void release(int Rid, int cnt) {
 	_running->requested.r[Rid] = _running->requested.r[Rid] - cnt;
 	_res.r[Rid] = _res.r[Rid] + cnt;
@@ -371,6 +383,7 @@ void release(int Rid, int cnt) {
 	scheduler();
 }
 
+// created by Luo hao
 void timeOut() {
 	insertEnd(&_stt.r[_running->priority], _running->Pid);
 
@@ -380,6 +393,7 @@ void timeOut() {
 	scheduler();
 }
 
+// created by Yang tao.
 void printProcess() {
 	PCB* head = _begin;
 	if (!head) {
@@ -411,6 +425,7 @@ void printProcess() {
 	}
 }
 
+// created by Yang tao.
 void printResource() {
 	PCB* head = _begin;
 	int cnt = 0;
@@ -456,6 +471,7 @@ void printResource() {
 	}
 }
 
+// created by Yang tao.
 void printInformation(char *name) {
 	PCB *process = findProcessByName(name);
 	printf("     Pid:\t%d\n", process->Pid);
